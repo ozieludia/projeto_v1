@@ -62,10 +62,21 @@ namespace Examples.Charge.API
                     options.IncludeXmlComments(xmlWebApiFile);
                 }
             });
+
+            services.AddCors(options => options.AddPolicy("All", 
+                opt => 
+                { 
+                    opt.AllowAnyHeader();
+                    opt.AllowAnyMethod();
+                    opt.AllowAnyOrigin();
+                }
+            ));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("All");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -78,7 +89,6 @@ namespace Examples.Charge.API
                 options.SwaggerEndpoint("../swagger/v1/swagger.json", "Example Api");
                 options.DisplayRequestDuration();
             });
-
 
             app.UseMvc();
         }

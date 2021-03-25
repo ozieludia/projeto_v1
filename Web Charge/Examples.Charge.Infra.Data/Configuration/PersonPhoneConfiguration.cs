@@ -11,11 +11,11 @@ namespace Examples.Charge.Infra.Data.Configuration
             builder.Ignore(b => b.DomainEvents);
 
             builder.ToTable("PersonPhone", "dbo").HasKey(t => new { t.BusinessEntityID, t.PhoneNumber, t.PhoneNumberTypeID });
+            builder.HasIndex(t => new { t.BusinessEntityID, t.PhoneNumber, t.PhoneNumberTypeID }).IsUnique();
 
             builder.Property(t => t.BusinessEntityID).HasColumnName("BusinessEntityID").IsRequired(true);
             builder.Property(t => t.PhoneNumberTypeID).HasColumnName("PhoneNumberTypeID").IsRequired(true);
             builder.Property(t => t.PhoneNumber).HasColumnName("PhoneNumber").IsRequired(true);
-
             builder.HasOne(t => t.PhoneNumberType);
 
             builder.HasData(new PersonPhone { BusinessEntityID = 1, PhoneNumber = "(19)99999-2883", PhoneNumberTypeID = 1 });

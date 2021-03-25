@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Web Charge/Examples.Charge.API/Dockerfile
+    environment:
+      ConnectionString__DefaultConnection: Server=localhost,1433;Database=pgc;User=sa;Password=Master@123;
     depends_on:
       - db
   db:
